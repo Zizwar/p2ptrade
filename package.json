@@ -1,0 +1,27 @@
+{
+  "name": "p2ptrade",
+  "version": "1.0.0",
+  "description": "p2p trade fiat vs crypto",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zizwar/p2ptrade.git"
+  },
+  "keywords": [
+    "p2p",
+    "trade",
+    "fiat",
+    "crypto",
+    "binance"
+  ],
+  "author": "Ibrahim BIDI",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zizwar/p2ptrade/issues"
+  },
+  "homepage": "https://github.com/Zizwar/p2ptrade#readme"
+}
