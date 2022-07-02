@@ -3,32 +3,19 @@ import { scheduleJob } from 'node-schedule';
 import axios from "axios";
 import { P2PTraders } from './src/db.js';
 //
-const log = console.log;
-const EVRY_TIME = '*/5 * * * * *';
-//
-
-const data = {
-    name: "winoO",
-    price: 23,
-    time: new Date().getTime()
-}
-const PATHP2P = 'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search';
-const asset = "USDT";
-const fiat = "MAD";
-const tradeType = "SELL";
-
-const POST_DATA = {
+import {
+    EVRY_TIME,
+    PATHP2P,
     asset,
     fiat,
     tradeType,
-    "merchantCheck": true,
-    "page": 1,
-    "payTypes": [
-    ],
-    "publisherType": null,
-    "rows": 20,
-    "transAmount": "5000"
-}
+    POST_DATA
+} from "./config";
+//
+const log = console.log;
+
+
+
 
 //
 const perparDataSave = ({ data = [] }) => {
@@ -50,7 +37,8 @@ const perparDataSave = ({ data = [] }) => {
             maxSingleTransAmount,
             minSingleTransAmount,
         } = item?.adv;
-        arrData.push({
+
+        price && arrData?.push({
             price,
             classify,
             tradeType,
@@ -63,17 +51,11 @@ const perparDataSave = ({ data = [] }) => {
             minSingleTransAmount,
         })
         //  console.log({ arrData })
-        P2PTraders.insertMany(arrData).then(function(){
+        P2PTraders.insertMany(arrData).then(function () {
             console.log("Data inserted")  // Success
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log(error)      // Failure
         });
-        //const trade =  new P2PTraders(arrData);
-        return
-        P2PTraders.collection.insert(arrData,(err, res) => {
-            if (err) return log({ err })
-            log({ res })
-        })
     }
 }
 //
