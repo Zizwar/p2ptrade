@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 //
 config();
 const { DB_USER, DB_PASS } = process.env;
-console.log({DB_USER,DB_PASS})
+console.log({ DB_USER, DB_PASS })
 //
 mongoose.Promise = global.Promise;
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.dognspk.mongodb.net/?retryWrites=true&w=majority`)
@@ -12,17 +12,41 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.dognspk.mongodb.n
 const Schema = mongoose.Schema
 
 const tradeSchema = new Schema({
-    name: {
-        type: String,
-        required: 'Name required'
-    },
+
     price: {
         type: Number,
         required: 'price is required.'
     },
-    time: {
+    classify: {
+        type: String,
+    },
+    fiatUni: {
+        type: String,
+    },
+    tradeType: {
+        type: String,
+    },
+    asset: {
+        type: String,
+    },
+    initAmount: {
         type: Number,
-        default:new Date().getTime()
+    },
+    surplusAmount: {
+        type: Number,
+    },
+    amountAfterEditing: {
+        type: Number,
+    },
+    maxSingleTransAmount: {
+        type: Number,
+    },
+    minSingleTransAmount: {
+        type: Number,
+    },
+    createAt: {
+        type: Date,
+        default: Date.now
     }
 })
 export const P2PTraders = mongoose.model('trades', tradeSchema)
