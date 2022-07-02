@@ -1,7 +1,7 @@
 
 import { scheduleJob } from 'node-schedule';
 import axios from "axios";
-import { P2PTraders } from './src/db.js';
+import { OrderBook, LastPrice } from './src/db.js';
 //
 import {
     EVRY_TIME,
@@ -17,8 +17,17 @@ const log = console.log;
 //
 const perparDataSave = ({ data = [] }) => {
 
-    // log(data[0].adv.price)
+    // log()
     //data || data.forEach(({ adv = [] }) => {
+    const { price:_lastPrice, advNo } = data[0]?.adv || []
+
+    const lastPrice = new LastPrice({ price:_lastPrice, advNo });
+
+    lastPrice.save((err, res) => {
+        if (err) return log({ err })
+        log("last price", { res })
+    })
+    return;
     const arrData = [];
     for (const item of data) {
 
@@ -33,6 +42,7 @@ const perparDataSave = ({ data = [] }) => {
             amountAfterEditing,
             maxSingleTransAmount,
             minSingleTransAmount,
+            advNo,
         } = item?.adv;
 
         price && arrData?.push({
@@ -46,11 +56,12 @@ const perparDataSave = ({ data = [] }) => {
             amountAfterEditing,
             maxSingleTransAmount,
             minSingleTransAmount,
+            advNo
         })
         //  console.log({ arrData })
-   
+
     }
-    P2PTraders.insertMany(arrData).then(function () {
+    OrderBook.insertMany(arrData).then(function () {
         console.log("Data inserted")  // Success
     }).catch(function (error) {
         console.log(error)      // Failure
@@ -67,12 +78,7 @@ const getDataP2P = () => {
             console.log({ error });
         });
 
-    return;
-    const trade = new P2PTraders(data);
-    trade.save((err, res) => {
-        if (err) return log({ err })
-        log({ res })
-    })
+
 }
 
 const jobDataP2P = scheduleJob(EVRY_TIME, getDataP2P);

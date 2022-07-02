@@ -11,8 +11,23 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.dognspk.mongodb.n
 //
 const Schema = mongoose.Schema
 
-const tradeSchema = new Schema({
+const lastPriceShema = new Schema({
+    advNo: {
+        type: Number,
+    },
+    price: {
+        type: Number,
+    },
+    createAt: {
+        type: Date,
+        default: Date.now
+    }
+})
 
+const orderBookShema = new Schema({
+    advNo: {
+        type: Number,
+    },
     price: {
         type: Number,
         required: 'price is required.'
@@ -49,4 +64,5 @@ const tradeSchema = new Schema({
         default: Date.now
     }
 })
-export const P2PTraders = mongoose.model('trades', tradeSchema)
+export const OrderBook = mongoose.model('OrderBook', orderBookShema)
+export const LastPrice = mongoose.model('LastPrice', lastPriceShema)
