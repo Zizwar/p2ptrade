@@ -6,11 +6,8 @@ import { P2PTraders } from './src/db.js';
 import {
     EVRY_TIME,
     PATHP2P,
-    asset,
-    fiat,
-    tradeType,
     POST_DATA
-} from "./config";
+} from "./config.js";
 //
 const log = console.log;
 
@@ -51,12 +48,13 @@ const perparDataSave = ({ data = [] }) => {
             minSingleTransAmount,
         })
         //  console.log({ arrData })
-        P2PTraders.insertMany(arrData).then(function () {
-            console.log("Data inserted")  // Success
-        }).catch(function (error) {
-            console.log(error)      // Failure
-        });
+   
     }
+    P2PTraders.insertMany(arrData).then(function () {
+        console.log("Data inserted")  // Success
+    }).catch(function (error) {
+        console.log(error)      // Failure
+    });
 }
 //
 const getDataP2P = () => {
