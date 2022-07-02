@@ -24,10 +24,10 @@ const perparDataSave = ({ data = [] }) => {
     const lastPrice = new LastPrice({ price:_lastPrice, advNo });
 
     lastPrice.save((err, res) => {
-        if (err) return log({ err })
-        log("last price", { res })
+        if (err)  log({ err })
+        log("last price",  res?.price )
     })
-    return;
+  //  return;
     const arrData = [];
     for (const item of data) {
 
