@@ -19,15 +19,16 @@ const perparDataSave = ({ data = [] }) => {
 
     // log()
     //data || data.forEach(({ adv = [] }) => {
-    const { price:_lastPrice, advNo } = data[0]?.adv || []
+    const key = Date.now;
+    const { price: _lastPrice, advNo } = data[0]?.adv || []
 
-    const lastPrice = new LastPrice({ price:_lastPrice, advNo });
+    const lastPrice = new LastPrice({ price: _lastPrice, advNo, key });
 
     lastPrice.save((err, res) => {
-        if (err)  log({ err })
-        log("last price",  res?.price )
+        if (err) log({ err })
+        log("last price", res?.price)
     })
-  //  return;
+    //  return;
     const arrData = [];
     for (const item of data) {
 
@@ -45,7 +46,8 @@ const perparDataSave = ({ data = [] }) => {
             advNo,
         } = item?.adv;
 
-        price && arrData?.push({
+        price && arrData.push({
+            key,
             price,
             classify,
             tradeType,
@@ -68,7 +70,11 @@ const perparDataSave = ({ data = [] }) => {
     });
 }
 //
-const getDataP2P = () => {
+
+const getDataP2P = (arg) => {
+
+    if (arg) POST_DATA.tradeType = "SELL";
+
     axios.post(PATHP2P, POST_DATA)
         .then(function ({ data = [] }) {
             perparDataSave(data)
@@ -77,8 +83,9 @@ const getDataP2P = () => {
         .catch(function (error) {
             console.log({ error });
         });
-
-
 }
-
-const jobDataP2P = scheduleJob(EVRY_TIME, getDataP2P);
+const getDataP2PInTimeOut = () => {
+    getDataP2P(true); //get SELL
+    setTimeout(getDataP2P, 3000) // get BUY
+}
+const jobDataP2P = scheduleJob(EVRY_TIME, getDataP2PInTimeOut);

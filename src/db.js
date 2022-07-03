@@ -12,11 +12,17 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.dognspk.mongodb.n
 const Schema = mongoose.Schema
 
 const lastPriceShema = new Schema({
+    key:{
+        type:Number
+    },
     advNo: {
         type: Number,
     },
     price: {
         type: Number,
+    },
+    tradeType: {
+        type: String,
     },
     createAt: {
         type: Date,
@@ -25,6 +31,10 @@ const lastPriceShema = new Schema({
 })
 
 const orderBookShema = new Schema({
+    key:{
+        type:Number
+    },
+    
     advNo: {
         type: Number,
     },
