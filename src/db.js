@@ -13,7 +13,7 @@ const Schema = mongoose.Schema
 
 const lastPriceShema = new Schema({
     key:{
-        type:Number
+        type:String
     },
     advNo: {
         type: Number,
@@ -32,7 +32,7 @@ const lastPriceShema = new Schema({
 
 const orderBookShema = new Schema({
     key:{
-        type:Number
+        type:String
     },
     
     advNo: {
