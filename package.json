@@ -1,6 +1,6 @@
 {
   "name": "p2ptrade",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "p2p trade fiat vs crypto",
   "main": "index.js",
   "scripts": {
