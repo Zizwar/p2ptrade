@@ -10,7 +10,7 @@ const log = console.log;
 const perparDataSave = ({ data = [] }) => {
   // log()
   //data || data.forEach(({ adv = [] }) => {
-  const key = Date.now;
+  const key = new Date().getTime().toString();
   const { price: _lastPrice, advNo } = data[0]?.adv || [];
 
   const lastPrice = new LastPrice({ price: _lastPrice, advNo, key });
