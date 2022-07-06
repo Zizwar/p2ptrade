@@ -4,7 +4,7 @@ import { OrderBook, LastPrice } from "./src/db.js";
 //
 import { EVRY_TIME, PATHP2P, POST_DATA } from "./config.js";
 //
-const log = console.log;
+const {log,error} = console;
 
 //
 const perparDataSave = ({ data = [] }) => {
@@ -64,20 +64,18 @@ const perparDataSave = ({ data = [] }) => {
 //
 
 const getDataP2P = (arg) => {
-  if (arg) POST_DATA.tradeType = "SELL";
-
+  POST_DATA.tradeType = arg;
+log('type=',POST_DATA.tradeType)
   axios
     .post(PATHP2P, POST_DATA)
     .then(function ({ data = [] }) {
       perparDataSave(data);
-      //console.log(response);
+     
     })
-    .catch(function (error) {
-      console.log({ error });
-    });
+    .catch(error);
 };
 const getDataP2PInTimeOut = () => {
-  getDataP2P(true); //get SELL
-  setTimeout(getDataP2P, 3000); // get BUY
+  getDataP2P("SELL"); //get SELL
+  setTimeout(()=>getDataP2P("BUY"), 3000); // get BUY
 };
 const jobDataP2P = scheduleJob(EVRY_TIME, getDataP2PInTimeOut);
